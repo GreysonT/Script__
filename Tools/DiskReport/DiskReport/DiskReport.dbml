@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="DiskReport" Class="DiskReportDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=BUREAU;Initial Catalog=DiskReport;Integrated Security=True" SettingsObjectName="DiskReport.Properties.Settings" SettingsPropertyName="DiskReportConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Files" Member="Files">
+    <Type Name="File">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="FileExtension" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="FileSize" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Owner" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="LastChange" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastAccess" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RootFolder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idFolder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Folder_File" Member="Folder" ThisKey="idFolder" OtherKey="id" Type="Folder" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FoldersACLs" Member="FoldersACLs">
+    <Type Name="FoldersACL">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idFolder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idSID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Rights" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="isHerited" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Inheritance" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Propagation" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="SID_FoldersACL" Member="SID" ThisKey="idSID" OtherKey="id" Type="SID" IsForeignKey="true" />
+      <Association Name="Right_FoldersACL" Member="Right" ThisKey="Rights" OtherKey="Right1" Type="Right" IsForeignKey="true" />
+      <Association Name="Folder_FoldersACL" Member="Folder" ThisKey="idFolder" OtherKey="id" Type="Folder" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SIDs" Member="SIDs">
+    <Type Name="SID">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SID" Member="SID1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="SID_FoldersACL" Member="FoldersACLs" ThisKey="id" OtherKey="idSID" Type="FoldersACL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TreeDetail" Member="TreeDetails">
+    <Type Name="TreeDetail">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="RootFolder" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TreeDetailErrors" Member="TreeDetailErrors">
+    <Type Name="TreeDetailError">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="datError" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="strType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strSource" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="strMessage" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="idFolder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rights" Member="Rights">
+    <Type Name="Right">
+      <Column Name="[Right]" Member="Right1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Right_FoldersACL" Member="FoldersACLs" ThisKey="Right1" OtherKey="Rights" Type="FoldersACL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Folders" Member="Folders">
+    <Type Name="Folder">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FolderName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FolderSize" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="FolderLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Owner" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="idParentFolder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RootFolder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fullpath" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Association Name="Folder_File" Member="Files" ThisKey="id" OtherKey="idFolder" Type="File" />
+      <Association Name="Folder_FoldersACL" Member="FoldersACLs" ThisKey="id" OtherKey="idFolder" Type="FoldersACL" />
+      <Association Name="Folder_Folder" Member="Folders" ThisKey="id" OtherKey="idParentFolder" Type="Folder" />
+      <Association Name="Folder_Folder" Member="Folder1" ThisKey="idParentFolder" OtherKey="id" Type="Folder" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.sp_ClearACLs" Method="sp_ClearACLs">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_CREATE_TreeDetail" Method="sp_CREATE_TreeDetail">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_DELETE_TreeDetail" Method="sp_DELETE_TreeDetail">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_InsertFolderACL" Method="sp_InsertFolderACL">
+    <Parameter Name="idFolder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SID" Parameter="sID" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Rights" Parameter="rights" Type="System.Int32" DbType="Int" />
+    <Parameter Name="isHerited" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Inheritance" Parameter="inheritance" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Propagation" Parameter="propagation" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_InsertRight" Method="sp_InsertRight">
+    <Parameter Name="Right" Parameter="right" Type="System.Int32" DbType="Int" />
+    <Parameter Name="str" Type="System.String" DbType="VarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_REINDEX_Data" Method="sp_REINDEX_Data">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_UpdateSIDList" Method="sp_UpdateSIDList">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetPath" Method="GetPath" IsComposable="true">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.String" />
+  </Function>
+  <Function Name="dbo.sp_InsertFile" Method="sp_InsertFile">
+    <Parameter Name="FileName" Parameter="fileName" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="FileExtension" Parameter="fileExtension" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="FileSize" Parameter="fileSize" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Owner" Parameter="owner" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="LastChange" Parameter="lastChange" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="LastAccess" Parameter="lastAccess" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="CreateDate" Parameter="createDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="RootFolder" Parameter="rootFolder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idFolder" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_InsertTreeDetailError" Method="sp_InsertTreeDetailError">
+    <Parameter Name="datError" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="strType" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="strSource" Type="System.String" DbType="NVarChar(4000)" />
+    <Parameter Name="strMessage" Type="System.String" DbType="NVarChar(4000)" />
+    <Parameter Name="idFolder" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_InsertFolder" Method="sp_InsertFolder">
+    <Parameter Name="FolderName" Parameter="folderName" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="FolderSize" Parameter="folderSize" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="FolderLevel" Parameter="folderLevel" Type="System.Int32" DbType="Int" />
+    <Parameter Name="owner" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="idParentFolder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RootFolder" Parameter="rootFolder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="fullpath" Type="System.String" DbType="NVarChar(1000)" />
+    <Parameter Name="id" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

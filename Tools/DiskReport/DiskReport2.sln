@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiskAnalysis", "DiskAnalysis\DiskAnalysis.csproj", "{405A2017-62E3-48F5-9F60-A6A14DD67296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiskReport", "DiskReport\DiskReport.csproj", "{D5A0CAE1-035C-4B48-8864-8F92AE5B9A4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{405A2017-62E3-48F5-9F60-A6A14DD67296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{405A2017-62E3-48F5-9F60-A6A14DD67296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{405A2017-62E3-48F5-9F60-A6A14DD67296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{405A2017-62E3-48F5-9F60-A6A14DD67296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5A0CAE1-035C-4B48-8864-8F92AE5B9A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5A0CAE1-035C-4B48-8864-8F92AE5B9A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5A0CAE1-035C-4B48-8864-8F92AE5B9A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5A0CAE1-035C-4B48-8864-8F92AE5B9A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
